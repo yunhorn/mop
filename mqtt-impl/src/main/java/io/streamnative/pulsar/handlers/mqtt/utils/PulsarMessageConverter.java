@@ -70,9 +70,12 @@ public class PulsarMessageConverter {
             };
 
     // Convert MQTT message to Pulsar message.
-    public static MessageImpl<byte[]> toPulsarMsg(Topic topic, MqttProperties properties, ByteBuffer payload) {
+    public static MessageImpl<byte[]> toPulsarMsg(boolean autoEventTime,Topic topic, MqttProperties properties, ByteBuffer payload) {
         MessageMetadata metadata = LOCAL_MESSAGE_METADATA.get();
         metadata.clear();
+        if(autoEventTime){
+            metadata.setEventTime(System.nanoTime());
+        }
         if (properties != null) {
             properties.listAll().forEach(prop -> {
                 if (MqttProperties.MqttPropertyType.USER_PROPERTY.value() == prop.propertyId()) {
