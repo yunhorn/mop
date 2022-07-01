@@ -30,6 +30,7 @@ import java.net.InetSocketAddress;
 import java.util.Map;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.pulsar.PulsarVersion;
 import org.apache.pulsar.broker.ServiceConfiguration;
 import org.apache.pulsar.broker.ServiceConfigurationUtils;
 import org.apache.pulsar.broker.protocol.ProtocolHandler;
@@ -96,7 +97,9 @@ public class MQTTProtocolHandler implements ProtocolHandler {
                 log.error("Failed to start MQTT proxy service.", ex);
             }
         }
-        log.info("Starting MqttProtocolHandler, MoP version is: '{}'", MopVersion.getVersion());
+
+        log.info("Starting MqttProtocolHandler, MoP version is: '{}' and Use Pulsar core Verson is: '{}' ",
+                MopVersion.getVersion(),PulsarVersion.getVersion());
         log.info("Git Revision {}", MopVersion.getGitSha());
         log.info("Built by {} on {} at {}",
                 MopVersion.getBuildUser(),
